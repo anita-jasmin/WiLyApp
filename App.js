@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+
+import React,{Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import BookTransactions from './screens/BookTransactions';
+import SearchScreen from './screens/SearchScreen';
+import{createAppContainer} from 'react-navigation';
+import{createBottomTabNavigator} from 'react-navigation-tabs';
+import {Icon} from 'react-native-elements';
+import 'react-native-vector-icons';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends Component{
+  render(){
+    return(
+      
+        <AppContainer/>
+      
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const BottomTabNavigator=createBottomTabNavigator({
+  BookTransactions:BookTransactions,
+  SearchScreen:SearchScreen
+},{
+  defaultNavigationOptions:({navigation})=>({
+    tabBarIcon:({})=>{
+      const routeName=navigation.state.routeName;
+      if(routeName==='BookTransactions'){
+        return(
+          <Icon name="book" type="ant-design"/>
+        );
+      }
+      else if(routeName==='SearchScreen'){
+        return(
+          <Icon name="search1" type="ant-design" color="red"/>
+        );
+      }
+    }
+  })
+})
+const AppContainer=createAppContainer(BottomTabNavigator);
